@@ -5,8 +5,12 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { useColorScheme } from '@/components/useColorScheme'; // Ensure this path is correct
 
-import { useColorScheme } from '@/components/useColorScheme';
+// Import your screens
+import { StoreDetailsScreen } from './stores/StoreDetailsScreen';
+import { ProductDetailsScreen } from './products/ProductDetails'; // Adjust the path if needed
+import { CategoryScreen } from './categories/CategoryScreen'; // Adjust the path if needed
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -53,6 +57,10 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        {/* Screen names should correspond to file names under app folder */}
+        <Stack.Screen name="StoreDetails" options={{ title: 'Store Details' }} />
+        <Stack.Screen name="ProductDetails" options={{ title: 'Product Details' }} />
+        <Stack.Screen name="CategoryScreen" options={{ title: 'Category Screen' }} />
       </Stack>
     </ThemeProvider>
   );
