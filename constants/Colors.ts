@@ -1,6 +1,6 @@
 // src/styles/theme.ts
 
-const tintColorLight = '#2f95dc';
+const tintColorLight = '#FFF';
 const tintColorDark = '#fff';
 
 // Define additional colors

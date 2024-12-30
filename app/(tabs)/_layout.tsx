@@ -1,18 +1,24 @@
 import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Entypo from '@expo/vector-icons/Entypo';
 import { Link, Tabs } from 'expo-router';
 import { Pressable } from 'react-native';
-
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
+// TabBarIcon component
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+  name: React.ComponentProps<typeof Entypo>['name'];
   color: string;
+  size: number;
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+  return (
+    <Entypo
+      size={props.size} // Dynamically set the icon size
+      style={{ marginBottom: -3 }}
+      {...props}
+    />
+  );
 }
 
 export default function TabLayout() {
@@ -20,25 +26,49 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
+      screenOptions={({ route }) => ({
+        tabBarActiveTintColor: '#19b0a5' , // Active icon color
+        tabBarInactiveTintColor:  'gray', // Inactive icon color
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '600',
+        },
+        tabBarStyle: {
+          backgroundColor: Colors[colorScheme ?? 'light'].background,
+          shadowColor: '#000', // Add shadow
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.2,
+          shadowRadius: 4,
+          elevation: 5,
+          paddingBottom:3,
+          borderRadius:25,
+          margin:10
+        },
+        tabBarIcon: ({ color, focused }) => (
+          <TabBarIcon
+            name={route.name === 'index' ? 'home' : 'list'} // Example icons
+            color={focused ? 'black' : 'gray'} // Change color based on focus
+            size={focused ? 30 : 24} // Dynamically adjust size based on focus
+          />
+        ),
         headerShown: useClientOnlyValue(false, true),
-      }}>
+      })}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Home',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="home" color={focused? '#19b0a5' : 'gray'} size={focused ? 30 : 22} />
+          ),
           headerRight: () => (
-            <Link href="/modal" asChild>
+            <Link href="/modal" asChild >
               <Pressable>
                 {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
+                  <Entypo
+                    name="info"
                     size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
+                    color={ 'rgb(222, 57, 112)'}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
@@ -48,10 +78,21 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="CategoryScreen"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'My',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="heart" color={focused? '#19b0a5' : 'gray'} size={focused ? 30 : 22} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="user" color={focused? '#19b0a5' : 'gray'} size={focused ? 30 : 22} />
+          ),
         }}
       />
     </Tabs>
