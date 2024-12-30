@@ -1,9 +1,12 @@
 {
+  "homepage": "https://falouix.github.io/wassely_app",
   "name": "wassely",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
+    "predeploy":"npm run build",
+    "deploy":"gh-pages -d build",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
